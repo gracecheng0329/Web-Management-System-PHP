@@ -6,4 +6,4 @@ unset($_SESSION['admin']);
 
 # session_destroy(); // 清掉所有 session 資料
 
-header('Location: list.php'); // redirect // 轉向
+header('Location: biddingList.php'); // redirect // 轉向

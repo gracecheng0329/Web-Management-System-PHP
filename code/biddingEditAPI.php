@@ -11,10 +11,6 @@ $output = [
     'error' => ''
 ];
 
-// TODO: 檢查資料格式
-// email_pattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-// mobile_pattern = /^09\d{2}-?\d{3}-?\d{3}$/;
-
 if (empty($_POST['sid'])) {
     $output['code'] = 405;
     $output['error'] = '沒有 sid';
@@ -28,45 +24,48 @@ if (!preg_match('^[A-Z]', $_POST['productName'])) {
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;
 }
-if (!preg_match('^[A-Z]', $_POST['designer'])) {
+
+if (!preg_match('\d', $_POST['startedPrice'])) {
     $output['code'] = 420;
-    $output['error'] = '請輸入正確設計師';
+    $output['error'] = '請輸入正確金額';
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;
 }
-if (!preg_match('^[A-Z]', $_POST['origin'])) {
+if (!preg_match('\d', $_POST['bidPrice'])) {
     $output['code'] = 430;
-    $output['error'] = '請輸入正確產地';
+    $output['error'] = '請輸入正確金額';
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;
 }
-if (!preg_match('\d', $_POST['price'])) {
+if (!preg_match('\d', $_POST['soldPrice'])) {
     $output['code'] = 440;
     $output['error'] = '請輸入正確金額';
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;
 }
 
-// `sid`, `product_sid`, `designer_sid`, `productName`, `designer`, `description`, `Origin`, `Dimensions`, `detailPics`, `price`, `favorite`, `visible`  
-$sql = "UPDATE `products` SET 
+// roduct_sid`, `membership_sid`, `startingDate`, `startingTime`, `bidDate`, `bidTime`, `startedPrice(NT)`, `bidPrice`, `soldPrice(NT)`, 
+$sql = "UPDATE `bidding` SET 
     `productName`=?,
-    `designer`=?,
-    `description`=?,
-    `Origin`=?,
-    `Dimensions`=?
-    `detailPics`=?
-    `price`=?
+    `startingDate`=?,
+    `startingTime`=?,
+    `bidDate`=?,
+    `bidTime`=?
+    `startedPrice`=?
+    `bidPrice`=?
+    `soldPrice`=?
     WHERE `sid`=?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
     $_POST['productName'],
-    $_POST['designer'],
-    $_POST['description'],
-    $_POST['Origin'],
-    $_POST['Dimensions'],
-    $_POST['detailPics'],
-    $_POST['price'],
+    $_POST['startingDate'],
+    $_POST['startingTime'],
+    $_POST['bidDate'],
+    $_POST['bidTime'],
+    $_POST['startedPrice'],
+    $_POST['bidPrice'],
+    $_POST['soldPrice'],
     $_POST['sid'],
 ]);
 

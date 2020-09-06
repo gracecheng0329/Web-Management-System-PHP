@@ -1,9 +1,9 @@
 <?php
 
 $db_host = "localhost"; //要連線到不同台電腦要打IP或Domain name
-$db_name = "Project"; //資料表名稱
-$db_user = "Grace";
-$db_pass = "admin";
+$db_name = "project"; //資料表名稱
+$db_user = "grace";
+$db_pass = "12345";
 
 $dsn = "mysql:host={$db_host};dbname={$db_name}"; //Data Source Name
 
@@ -20,7 +20,7 @@ $pdo = new PDO($dsn, $db_user, $db_pass, $pdo_options);
 // 若要使用web_root建立絕對路徑,要在兩邊檔案打以下指令連接起來
 // require __DIR__ . '/part/__connect db.php';
 
-define('WEB_ROOT', '/Project');
+define('WEB_ROOT', '/project');
 
 if (!isset($_SESSION)) {
     session_start();

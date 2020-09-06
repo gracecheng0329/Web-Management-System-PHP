@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/part/__connect db.php';
+require __DIR__ . '/parts/__connect_db.php';
 if (!empty($_POST['sid'])) {
     $sql = "UPDATE `products` SET `bookname`=?, `category_sid`=?, `price`=? WHERE `sid`=?";
     $stmt = $pdo->prepare($sql);

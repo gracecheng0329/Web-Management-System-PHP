@@ -37,7 +37,7 @@ require __DIR__ . '/parts/__connect_db.php';
                 console.log(obj);
                 if (obj.success) {
                     alert('登入成功');
-                    location.href = 'list.php';
+                    location.href = 'biddingList.php';
                 } else {
                     alert('登入失敗');
                 }

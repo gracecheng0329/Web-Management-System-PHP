@@ -1,21 +1,8 @@
 <?php
-$page_title = 'Edit';
-$page_name = 'Edit';
+$page_title = 'Bidding add';
+$page_name = 'Bidding add';
 require __DIR__ . '/parts/__connect_db.php';
-require __DIR__. '/parts/__admin_required.php';
-
-$sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
-if (empty($sid)) {
-    header('Location: list.php');
-    exit;
-}
-
-$sql = " SELECT * FROM `products` WHERE sid=$sid";
-$row = $pdo->query($sql)->fetch();
-if (empty($row)) {
-    header('Location: list.php');
-    exit;
-}
+require __DIR__ . '/parts/__admin_required.php';
 ?>
 
 <?php require __DIR__ . '/parts/__html_head.php'; ?>
@@ -28,52 +15,59 @@ if (empty($row)) {
         color: red;
     }
 </style>
+<!-- SELECT `sid`, `product_sid`, `membership_sid`, `startingDate`, `startingTime`, `bidDate`, `bidTime`, `startedPrice(NT)`, `bidPrice`, `soldPrice(NT)`, `winner` FROM `bidding` WHERE 1 -->
 <?php include __DIR__ . '/parts/__navbar.php'; ?>
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col-lg-6">
             <div id="infobar" class="alert alert-success" role="alert" style="display: none">
                 A simple success alert—check it out!
             </div>
             <div class="card" style="width: 40rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Edit</h5>
-                    <!-- 加上novalidate 會使HTML驗證功能屬性失效 -->
+                    <h5 class="card-title">ADD</h5>
+                   
                     <form name="form1" onsubmit="checkForm(); return false;" novalidate>
-                        <input type="hidden" name="sid" value="<?= $row['sid'] ?>">
                         <div class="form-group">
                             <label for="productName"><span class="red-stars">**</span> Product Name</label>
                             <input type="text" class="form-control" id="productName" name="productName" required>
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
-                            <label for="designer"><span class="red-stars">**</span> Designer</label>
-                            <input type="text" class="form-control" id="designer" name="designer">
+                            <label for="startingDate"><span class="red-stars">**</span> Starting date</label>
+                            <input type="text" class="form-control" id="startingDate" name="startingDate">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
-                            <label for="description"><span class="red-stars">**</span> Description</label>
-                            <textarea type="text" class="form-control" id="description" name="description" cols="30" rows="3"></textarea>
+                            <label for="startingTime"><span class="red-stars">**</span> Starting time</label>
+                            <input type="text" class="form-control" id="startingTime" name="startingTime">
 
                         </div>
                         <div class="form-group">
-                            <label for="origin">Origin</label>
-                            <input type="text" class="form-control" id="origin" name="origin">
+                            <label for="bidDate">Bid date</label>
+                            <input type="text" class="form-control" id="bidDate" name="bidDate">
+                            <small class="form-text error-msg"></small>
+                        </div>                       
+                        <div class="form-group">
+                            <label for="bidTime">Bid time</label>
+                            <input type="text" class="form-control" id="bidTime" name="bidTime">
+                        </div>
+                        <div class="form-group">
+                            <label for="startedPrice"><span class="red-stars">**</span> Started price</label>
+                            <input type="text" class="form-control" id="startedPrice" name="startedPrice">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
-                            <label for="dimensions">Dimensions</label>
-                            <textarea class="form-control" name="dimensions" id="dimensions" cols="30" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="detailPics">Detail Pics</label>
-                            <input type="text" class="form-control" id="detailPics" name="detailPics">
-                        </div>
-                        <div class="form-group">
-                            <label for="price"><span class="red-stars">**</span> Price</label>
-                            <input type="text" class="form-control" id="price" name="price">
+                            <label for="bidPrice"><span class="red-stars">**</span> Bid price</label>
+                            <input type="text" class="form-control" id="bidPrice" name="bidPrice">
                             <small class="form-text error-msg"></small>
                         </div>
+                        <div class="form-group">
+                            <label for="soldPrice"><span class="red-stars">**</span> Min sold price</label>
+                            <input type="text" class="form-control" id="soldPrice" name="soldPrice">
+                            <small class="form-text error-msg"></small>
+                        </div>
+                         
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
 
@@ -84,6 +78,7 @@ if (empty($row)) {
 </div>
 
 <?php include __DIR__ . '/parts/__scripts.php'; ?>
+<!-- SELECT `sid`, `product_sid`, `membership_sid`, `startingDate`, `startingTime`, `bidDate`, `bidTime`, `startedPrice(NT)`, `bidPrice`, `soldPrice(NT)`, `winner` FROM `bidding` WHERE 1 -->
 <script>
     const productName_pattern = /^[A-Z]/;
     const designer_pattern = /^[A-Z]/;
@@ -132,7 +127,7 @@ if (empty($row)) {
         if (isPass) {
             const fd = new FormData(document.form1);
 
-            fetch('editAPI.php', {
+            fetch('insert_API.php', {
                     method: 'POST',
                     body: fd
                 })
@@ -140,16 +135,16 @@ if (empty($row)) {
                 .then(obj => {
                     console.log(obj);
                     if (obj.success) {
-                        infobar.innerHTML = '修改成功';
+                        infobar.innerHTML = '新增成功';
                         // infobar.className = "alert alert-success";
                         if (infobar.classList.contains('alert-danger')) {
                             infobar.classList.replace('alert-danger', 'alert-success')
                             setTimeout(() => {
-                                location.href = '<?= $_SERVER['HTTP_REFERER'] ?? "list.php" ?>';
+                                location.href = 'list.php';
                             }, 3000);
                         };
                     } else {
-                        infobar.innerHTML = obj.error || '資料未修改';
+                        infobar.innerHTML = obj.error || '新增失敗';
                         // infobar.className = "alert alert-danger";
                         if (infobar.classList.contains('alert-success')) {
                             infobar.classList.replace('alert-success', 'alert-danger')
