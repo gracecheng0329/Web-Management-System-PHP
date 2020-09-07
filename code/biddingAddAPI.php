@@ -7,35 +7,16 @@ header('Content-Type: application/json');
 $output = [
     'success' => false,
     'postData' => $_POST,
-    // 'code' => 0,
-    // 'error' => ''
+    'code' => 0,
+    'error' => ''
 ];
 
-if (empty($_POST['sid'])) {
-    $output['code'] = 405;
-    $output['error'] = '沒有 sid';
-    echo json_encode($output, JSON_UNESCAPED_UNICODE);
-    exit;
-}
+// TODO: 檢查資料格式
 
-$sql = "UPDATE `bidding` SET 
-    -- `product_sid`=?,
-    -- `membership_sid`=?,
-    `productName`=?,
-    `pics`=?,
-    `startingDate`=?,
-    `startingTime`=?,
-    `bidDate`=?,
-    `bidTime`=?,
-    `startedPrice`=?,
-    `bidPrice`=?,
-    `soldPrice`=?
-    WHERE `sid`=?";
+$sql = "INSERT INTO `bidding`(`productName`, `pics`, `startingDate`, `startingTime`, `bidDate`,`bidTime`, `startedPrice`,`bidPrice`,`soldPrice`) VALUES (?,?,?,?,?,?,?,?,?)";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-    // $_POST['product_sid'],
-    // $_POST['membership_sid'],
     $_POST['productName'],
     $_POST['pics'],
     $_POST['startingDate'],
@@ -45,7 +26,6 @@ $stmt->execute([
     $_POST['startedPrice'],
     $_POST['bidPrice'],
     $_POST['soldPrice'],
-    $_POST['sid'],
 ]);
 
 if ($stmt->rowCount()) {

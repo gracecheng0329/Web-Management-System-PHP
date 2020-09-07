@@ -97,7 +97,7 @@ if ($totalRows > 0) {
         <?php foreach ($rows as $r) : ?>
             <tr>
                 <?php if (isset($_SESSION['admin'])) : ?>
-                    <td><a href="delete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
+                    <td><a href="biddingDelete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
                             <i class="fas fa-trash-alt"></i></a></td>
                     <td><a href="javascript:delete_it(<?= $r['sid'] ?>)">
                             <i class="fas fa-user-times"></i> </a></td>
@@ -106,7 +106,7 @@ if ($totalRows > 0) {
                 <td><?= $r['sid'] ?></td>
                 <td><?= $r['productName'] ?></td>
                 <td><?= $r['startingDate'] ?></td>
-                <td><?= htmlentities($r['startingTime']) ?></td>
+                <td><?= $r['startingTime'] ?></td>
                 <td><?= $r['bidDate'] ?></td>
                 <td><?= $r['bidTime'] ?></td>
                 <td><?= $r['startedPrice'] ?></td>
@@ -134,7 +134,7 @@ if ($totalRows > 0) {
 
     function delete_it(sid) {
         if (confirm(`是否要刪除編號為 ${sid} 的資料???`)) {
-            location.href = 'delete.php?sid=' + sid;
+            location.href = 'biddingDelete.php?sid=' + sid;
         }
     }
 

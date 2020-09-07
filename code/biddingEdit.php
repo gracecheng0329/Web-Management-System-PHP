@@ -2,7 +2,7 @@
 $page_title = 'Bidding Edit';
 $page_name = 'Bidding Edit';
 require __DIR__ . '/parts/__connect_db.php';
-require __DIR__. '/parts/__admin_required.php';
+require __DIR__ . '/parts/__admin_required.php';
 
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 if (empty($sid)) {
@@ -37,47 +37,52 @@ if (empty($row)) {
             </div>
             <div class="card" style="width: 40rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Edit</h5>                    
+                    <h5 class="card-title">Edit</h5>
                     <form name="form1" onsubmit="checkForm(); return false;" novalidate>
                         <input type="hidden" name="sid" value="<?= $row['sid'] ?>">
                         <div class="form-group">
                             <label for="productName"><span class="red-stars">**</span> Product Name</label>
-                            <input type="text" class="form-control" id="productName" name="productName" required>
+                            <input type="text" class="form-control" id="productName" name="productName" value="<?= htmlentities($row['productName']) ?>">
+                            <small class="form-text error-msg"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="pics"><span class="red-stars">**</span> Pictures</label>
+                            <input type="text" class="form-control" id="pics" name="pics" value="<?= htmlentities($row['pics']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
                             <label for="startingDate"><span class="red-stars">**</span> Starting date</label>
-                            <input type="text" class="form-control" id="startingDate" name="startingDate">
+                            <input type="date" class="form-control" id="startingDate" name="startingDate" value="<?= htmlentities($row['startingDate']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
                             <label for="startingTime"><span class="red-stars">**</span> Starting time</label>
-                            <input type="text" class="form-control" id="startingTime" name="startingTime">
+                            <input type="time" class="form-control" id="startingTime" name="startingTime" value="<?= htmlentities($row['startingTime']) ?>">
 
                         </div>
                         <div class="form-group">
                             <label for="bidDate">Bid date</label>
-                            <input type="text" class="form-control" id="bidDate" name="bidDate">
+                            <input type="date" class="form-control" id="bidDate" name="bidDate" value="<?= htmlentities($row['bidDate']) ?>">
                             <small class="form-text error-msg"></small>
-                        </div>                       
+                        </div>
                         <div class="form-group">
                             <label for="bidTime">Bid time</label>
-                            <input type="text" class="form-control" id="bidTime" name="bidTime">
+                            <input type="time" class="form-control" id="bidTime" name="bidTime" value="<?= htmlentities($row['bidTime']) ?>">
                         </div>
                         <div class="form-group">
                             <label for="startedPrice"><span class="red-stars">**</span> Started price</label>
-                            <input type="text" class="form-control" id="startedPrice" name="startedPrice">
+                            <input type="text" class="form-control" id="startedPrice" name="startedPrice" value="<?= htmlentities($row['startedPrice']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
                             <label for="bidPrice"><span class="red-stars">**</span> Bid price</label>
-                            <input type="text" class="form-control" id="bidPrice" name="bidPrice">
-                            <small class="form-text error-msg"></small>
+                            <input type="text" class="form-control" id="bidPrice" name="bidPrice" value="<?= htmlentities($row['bidPrice']) ?>">
+                            <small class=" form-text error-msg"></small>
                         </div>
                         <div class="form-group">
                             <label for="soldPrice"><span class="red-stars">**</span> Min sold price</label>
-                            <input type="text" class="form-control" id="soldPrice" name="soldPrice">
-                            <small class="form-text error-msg"></small>
+                            <input type="text" class="form-control" id="soldPrice" name="soldPrice" value="<?= htmlentities($row['soldPrice']) ?>">
+                            <small class=" form-text error-msg"></small>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -90,11 +95,11 @@ if (empty($row)) {
 
 <?php include __DIR__ . '/parts/__scripts.php'; ?>
 <script>
-    const productName_pattern = /^[A-Z]/;
-    const startedPrice_p = /^[A-Z]/;
-    const bidPrice_p = /^[A-Z]/;
+    const productName_pattern = /[a-zA-Z]/;
+    const startedPrice_p = /\d/;
+    const bidPrice_p = /\d/;
     const soldPrice_p = /\d/;
-// roduct_sid`, `membership_sid`, `startingDate`, `startingTime`, `bidDate`, `bidTime`, `startedPrice(NT)`, `bidPrice`, `soldPrice(NT)`, 
+
     const $productName = document.querySelector('#productName')
     const $startedPrice = document.querySelector('#startedPrice')
     const $bidPrice = document.querySelector('#bidPrice')
@@ -117,14 +122,14 @@ if (empty($row)) {
             $productName.style.borderColor = 'red';
             $productName.nextElementSibling.innerHTML = 'Please input your product name correctly';
         };
-        
+
         if (!startedPrice_p.test($startedPrice.value)) {
             isPass = false;
             $startedPrice.style.borderColor = 'red';
             $startedPrice.nextElementSibling.innerHTML = 'Please input your price correctly';
         };
 
-        if (isPass) {
+        if (true) {
             const fd = new FormData(document.form1);
 
             fetch('biddingEditAPI.php', {

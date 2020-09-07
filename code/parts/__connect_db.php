@@ -2,8 +2,8 @@
 
 $db_host = "localhost"; //要連線到不同台電腦要打IP或Domain name
 $db_name = "project"; //資料表名稱
-$db_user = "grace";
-$db_pass = "12345";
+$db_user = "Grace"; //grace
+$db_pass = "admin"; //12345
 
 $dsn = "mysql:host={$db_host};dbname={$db_name}"; //Data Source Name
 

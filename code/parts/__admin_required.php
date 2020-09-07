@@ -5,6 +5,6 @@ if (!isset($_SESSION)) {
 }
 
 if (!isset($_SESSION['admin'])) {
-    header('Location: list.php');
+    header('Location: biddingList.php');
     exit;
 }
