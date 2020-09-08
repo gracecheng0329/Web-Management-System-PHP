@@ -39,47 +39,32 @@ if ($totalRows > 0) {
         color: burlywood;
         cursor: pointer;
     }
+
+    img {
+        width: 200px;
+        /* height: 200px; */
+    }
+
+    .h {
+        margin: 20px auto;
+    }
 </style>
 <?php include __DIR__ . '/parts/__navbar.php'; ?>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-6">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
-                        <a class="page-link" href="?page=<?= $page - 1 ?>">
-                            <i class="fas fa-angle-double-left"></i>
-                        </a>
-                    </li>
-                    <?php for ($i = $page - 3; $i <= $page + 3; $i++) :
-                        if ($i < 1) continue;
-                        if ($i > $totalPages) break;
-                    ?>
-                        <li class="page-item <?$i==$page ?'active':''?>">
-                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                        </li>
-                    <?php endfor; ?>
-                    <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
-                        <a class="page-link" href="?page=<?= $page + 1 ?>">
-                            <i class="fas fa-angle-double-right"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
-        </div>
-    </div>
+<div class="d-flex justify-content-center h">
+    <h3>競標產品列表</h3>
 </div>
-<table class="table table-striped">
-    <thead>
+<table class="table">
+    <thead class="thead-light">
         <tr>
-            <!-- SELECT `sid`, `product_sid`, `membership_sid`, `startingDate`, `startingTime`, `bidDate`, `bidTime`, `startedPrice(NT)`, `bidPrice`, `soldPrice(NT)`, `winner` FROM `bidding` WHERE 1 --> 
             <?php if (isset($_SESSION['admin'])) : ?>
+                <th>
+                    <i class="fas fa-check-circle"></i>
+                </th>
                 <th><i class="fas fa-trash-alt"></i></th>
-                <th scope="col"><i class="fas fa-user-times"></i></th>
             <?php endif; ?>
             <th scope="col">No.</th>
             <th scope="col">Product Name</th>
+            <th scope="col">Product Pics</th>
             <th scope="col">Starting date</th>
             <th scope="col">Starting time</th>
             <th scope="col">Bid date</th>
@@ -97,14 +82,16 @@ if ($totalRows > 0) {
         <?php foreach ($rows as $r) : ?>
             <tr>
                 <?php if (isset($_SESSION['admin'])) : ?>
+                    <td class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                        <!-- <label class="form-check-label" for="inlineCheckbox1">1</label> -->
+                    </td>
                     <td><a href="biddingDelete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
                             <i class="fas fa-trash-alt"></i></a></td>
-                    <td><a href="javascript:delete_it(<?= $r['sid'] ?>)">
-                            <i class="fas fa-user-times"></i> </a></td>
                 <?php endif; ?>
-                < <!-- SELECT `sid`, `product_sid`, `membership_sid`, `startingDate`, `startingTime`, `bidDate`, `bidTime`, `startedPrice(NT)`, `bidPrice`, `soldPrice(NT)`, `winner` FROM `bidding` WHERE 1 --> 
-                <td><?= $r['sid'] ?></td>
+                <td><?= $r['product_sid'] ?></td>
                 <td><?= $r['productName'] ?></td>
+                <td><img src="./upload/<?= $r['pics'] ?>" alt=""></td>
                 <td><?= $r['startingDate'] ?></td>
                 <td><?= $r['startingTime'] ?></td>
                 <td><?= $r['bidDate'] ?></td>
@@ -113,13 +100,39 @@ if ($totalRows > 0) {
                 <td><?= $r['bidPrice'] ?></td>
                 <td><?= $r['soldPrice'] ?></td>
                 <?php if (isset($_SESSION['admin'])) : ?>
-                    
                     <td><a href="biddingEdit.php?sid=<?= $r['sid'] ?>"><i class="fas fa-edit"></i></a></td>
                 <?php endif; ?>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
+<div class="container">
+    <div class="row ">
+        <div class="col d-flex justify-content-center">
+            <nav aria-label="Page navigation example ">
+                <ul class="pagination">
+                    <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?page=<?= $page - 1 ?>">
+                            <i class="fas fa-angle-double-left"></i>
+                        </a>
+                    </li>
+                    <?php for ($i = $page - 3; $i <= $page + 3; $i++) :
+                        if ($i < 1) continue;
+                        if ($i > $totalPages) break;
+                    ?>
+                        <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                        </li>
+                    <?php endfor; ?>
+                    <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?page=<?= $page + 1 ?>">
+                            <i class="fas fa-angle-double-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 </div>
 <?php include __DIR__ . '/parts/__scripts.php'; ?>
 <script>

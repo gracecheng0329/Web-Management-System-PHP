@@ -27,9 +27,13 @@ if (empty($row)) {
     small.error-msg {
         color: red;
     }
+
+    .edit {
+        font-size: 2rem;
+    }
 </style>
 <?php include __DIR__ . '/parts/__navbar.php'; ?>
-<div class="container">
+<div class="container d-flex justify-content-center">
     <div class="row">
         <div class="col">
             <div id="infobar" class="alert alert-success" role="alert" style="display: none">
@@ -37,17 +41,24 @@ if (empty($row)) {
             </div>
             <div class="card" style="width: 40rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Edit</h5>
+                    <h5 class="card-title d-flex justify-content-center edit">修改產品</h5>
                     <form name="form1" onsubmit="checkForm(); return false;" novalidate>
                         <input type="hidden" name="sid" value="<?= $row['sid'] ?>">
                         <div class="form-group">
-                            <label for="productName"><span class="red-stars">**</span> Product Name</label>
-                            <input type="text" class="form-control" id="productName" name="productName" value="<?= htmlentities($row['productName']) ?>">
+                            <button type="button" class="btn btn-info" onclick="file_input.click()">上傳產品圖</button>
+                            <input type="hidden" id="pics" name=" pics" value="<?= $row['pics'] ?>">
+                            <img src="./upload/<?= $row['pics'] ?>" alt="" id="myimg" width="250px">
+                            <br>
+                            <input type="file" id="file_input" style="display: none">
+                        </div>
+                        <div class="form-group">
+                            <label for="product_sid"><span class="red-stars">**</span> Product No.</label>
+                            <input type="text" class="form-control" id="product_sid" name="product_sid" value="<?= htmlentities($row['product_sid']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
-                            <label for="pics"><span class="red-stars">**</span> Pictures</label>
-                            <input type="text" class="form-control" id="pics" name="pics" value="<?= htmlentities($row['pics']) ?>">
+                            <label for="productName"><span class="red-stars">**</span> Product Name</label>
+                            <input type="text" class="form-control" id="productName" name="productName" value="<?= htmlentities($row['productName']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
@@ -71,17 +82,17 @@ if (empty($row)) {
                         </div>
                         <div class="form-group">
                             <label for="startedPrice"><span class="red-stars">**</span> Started price</label>
-                            <input type="text" class="form-control" id="startedPrice" name="startedPrice" value="<?= htmlentities($row['startedPrice']) ?>">
+                            <input type="number" class="form-control" id="startedPrice" name="startedPrice" value="<?= htmlentities($row['startedPrice']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
                             <label for="bidPrice"><span class="red-stars">**</span> Bid price</label>
-                            <input type="text" class="form-control" id="bidPrice" name="bidPrice" value="<?= htmlentities($row['bidPrice']) ?>">
+                            <input type="number" class="form-control" id="bidPrice" name="bidPrice" value="<?= htmlentities($row['bidPrice']) ?>">
                             <small class=" form-text error-msg"></small>
                         </div>
                         <div class="form-group">
                             <label for="soldPrice"><span class="red-stars">**</span> Min sold price</label>
-                            <input type="text" class="form-control" id="soldPrice" name="soldPrice" value="<?= htmlentities($row['soldPrice']) ?>">
+                            <input type="number" class="form-control" id="soldPrice" name="soldPrice" value="<?= htmlentities($row['soldPrice']) ?>">
                             <small class=" form-text error-msg"></small>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -95,6 +106,24 @@ if (empty($row)) {
 
 <?php include __DIR__ . '/parts/__scripts.php'; ?>
 <script>
+    const file_input = document.querySelector('#file_input');
+    const pics = document.querySelector('#pics');
+
+    file_input.addEventListener('change', function(event) {
+        console.log(file_input.files)
+        const fd = new FormData();
+        fd.append('myfile', file_input.files[0]);
+
+        fetch('upload-single-api.php', {
+                method: 'POST',
+                body: fd
+            })
+            .then(r => r.json())
+            .then(obj => {
+                pics.value = obj.filename;
+                document.querySelector('#myimg').src = './upload/' + obj.filename;
+            });
+    });
     const productName_pattern = /[a-zA-Z]/;
     const startedPrice_p = /\d/;
     const bidPrice_p = /\d/;
@@ -129,7 +158,7 @@ if (empty($row)) {
             $startedPrice.nextElementSibling.innerHTML = 'Please input your price correctly';
         };
 
-        if (true) {
+        if (isPass) {
             const fd = new FormData(document.form1);
 
             fetch('biddingEditAPI.php', {

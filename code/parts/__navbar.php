@@ -10,14 +10,16 @@ if (!isset($page_name)) $page_name = '';
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item   <?= $page_name == 'Product List' ? 'active' : '' ?>">
+      <!-- <li class="nav-item   <?= $page_name == 'Product List' ? 'active' : '' ?>">
         <a class="nav-link" href="<?= WEB_ROOT ?>/code/list.php">Product List</a></li>
       <li class="nav-item <?= $page_name == 'Insert' ? 'active' : '' ?>">
-        <a class="nav-link" href="<?= WEB_ROOT ?>/code/insert.php">Add</a></li>
+        <a class="nav-link" href="<?= WEB_ROOT ?>/code/insert.php">Add</a></li> -->
       <li class="nav-item   <?= $page_name == 'Bidding List' ? 'active' : '' ?>">
-        <a class="nav-link" href="<?= WEB_ROOT ?>/code/biddingList.php">Bidding List</a></li>
-      <li class="nav-item   <?= $page_name == 'Bidding Add' ? 'active' : '' ?>">
-        <a class="nav-link" href="<?= WEB_ROOT ?>/code/biddingAdd.php">Bidding Add</a></li>
+        <a class="nav-link" href="<?= WEB_ROOT ?>/code/biddingList.php">競標產品列表</a></li>
+      <?php if (isset($_SESSION['admin'])) : ?>
+        <li class="nav-item   <?= $page_name == 'Bidding add' ? 'active' : '' ?>">
+          <a class="nav-link" href="<?= WEB_ROOT ?>/code/biddingAdd.php">新增產品</a></li>
+      <?php endif; ?>
     </ul>
     <ul class="navbar-nav">
       <?php if (isset($_SESSION['admin'])) : ?>

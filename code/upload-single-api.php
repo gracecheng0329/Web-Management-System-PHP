@@ -1,7 +1,7 @@
 <?php
-require __DIR__ . '/part/__connect db.php';
+require __DIR__ . '/parts/__connect_db.php';
 header('Content-Type: application/json');
-$path = __DIR__ . '/photo/';
+$path = __DIR__ . '/upload/';
 $output = [
     'success' => false,
     'error' => 'no file uploaded',
