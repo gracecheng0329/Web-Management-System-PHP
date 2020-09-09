@@ -10,3 +10,4 @@ if (empty($_GET['sid'])) {
 $sid = intval($_GET['sid']) ?? 0;
 $pdo->query("DELETE FROM bidding WHERE sid=$sid ");
 header('Location: ' . $referer);
+

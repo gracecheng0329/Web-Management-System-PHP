@@ -20,7 +20,6 @@ require __DIR__ . '/parts/__admin_required.php';
         font-size: 2rem;
     }
 </style>
-
 <?php include __DIR__ . '/parts/__navbar.php'; ?>
 <div class="container d-flex justify-content-center">
     <div class="row">
@@ -35,7 +34,7 @@ require __DIR__ . '/parts/__admin_required.php';
                         <div class="form-group">
                             <button type="button" class="btn btn-info" onclick="file_input.click()">上傳產品圖</button>
                             <input type="hidden" id="pics" name=" pics">
-                            <img src="./upload/<?= $sql['pics'] ?>" alt="" id="myimg" width="250px">
+                            <img src="" alt="" id="myimg" width="250px">
                             <br>
                             <input type="file" id="file_input" style="display: none">
                         </div>
@@ -161,20 +160,20 @@ require __DIR__ . '/parts/__admin_required.php';
                     console.log(obj);
                     if (obj.success) {
                         infobar.innerHTML = '新增成功';
-                        // infobar.className = "alert alert-success";
-                        if (infobar.classList.contains('alert-danger')) {
-                            infobar.classList.replace('alert-danger', 'alert-success')
-                            setTimeout(() => {
-                                location.href = 'biddingList.php';
-                            }, 3000);
-                        };
+                        infobar.className = "alert alert-success";
+                        // if (infobar.classList.contains('alert-danger')) {
+                        //     infobar.classList.replace('alert-danger', 'alert-success')};
+                        setTimeout(() => {
+                            location.href = 'biddingList.php';
+                        }, 3000);
+
                     } else {
                         infobar.innerHTML = obj.error || '新增失敗';
-                        // infobar.className = "alert alert-danger";
-                        if (infobar.classList.contains('alert-success')) {
-                            infobar.classList.replace('alert-success', 'alert-danger')
-                            submitBtn.style.display = 'block';
-                        }
+                        infobar.className = "alert alert-danger";
+                        // if (infobar.classList.contains('alert-success')) {
+                        //     infobar.classList.replace('alert-success', 'alert-danger')}
+                        submitBtn.style.display = 'block';
+
                     }
                     infobar.style.display = 'block';
                 });

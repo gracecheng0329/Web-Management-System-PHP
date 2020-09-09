@@ -57,9 +57,9 @@ if ($totalRows > 0) {
     <thead class="thead-light">
         <tr>
             <?php if (isset($_SESSION['admin'])) : ?>
-                <th>
+                <!-- <th>
                     <i class="fas fa-check-circle"></i>
-                </th>
+                </th> -->
                 <th><i class="fas fa-trash-alt"></i></th>
             <?php endif; ?>
             <th scope="col">No.</th>
@@ -82,10 +82,10 @@ if ($totalRows > 0) {
         <?php foreach ($rows as $r) : ?>
             <tr>
                 <?php if (isset($_SESSION['admin'])) : ?>
-                    <td class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                        <!-- <label class="form-check-label" for="inlineCheckbox1">1</label> -->
-                    </td>
+                    <!-- <td class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id=checkbox" value="option1">
+                        <label class="form-check-label" for="inlineCheckbox1">1</label>
+                    </td> -->
                     <td><a href="biddingDelete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
                             <i class="fas fa-trash-alt"></i></a></td>
                 <?php endif; ?>
@@ -150,6 +150,15 @@ if ($totalRows > 0) {
             location.href = 'biddingDelete.php?sid=' + sid;
         }
     }
+
+    // const checkbox = document.querySelector('#checkbox')
+
+    // const check = ()=>{
+    //     const tick = e
+    //     checkbox.addEventListener('click',()=>{
+
+    //     })
+    // }
 
     // const table = document.querySelector('table')
 
