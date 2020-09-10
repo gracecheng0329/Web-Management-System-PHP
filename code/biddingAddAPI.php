@@ -15,11 +15,10 @@ $output = [
 
 
 
-$sql = "INSERT INTO `bidding`(`product_sid`,`productName`, `pics`, `startingDate`, `startingTime`, `bidDate`,`bidTime`, `startedPrice`,`bidPrice`,`soldPrice`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+$sql = "INSERT INTO `bidding`(`productName`, `pics`, `startingDate`, `startingTime`, `bidDate`,`bidTime`, `startedPrice`,`bidPrice`,`soldPrice`) VALUES (?,?,?,?,?,?,?,?,?)";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-    $_POST['product_sid'],
     $_POST['productName'],
     $_POST['pics'],
     $_POST['startingDate'],

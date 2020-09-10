@@ -51,23 +51,19 @@ if (empty($row)) {
                             <br>
                             <input type="file" id="file_input" style="display: none">
                         </div>
-                        <div class="form-group">
-                            <label for="product_sid"><span class="red-stars">**</span> Product No.</label>
-                            <input type="text" class="form-control" id="product_sid" name="product_sid" value="<?= htmlentities($row['product_sid']) ?>">
-                            <small class="form-text error-msg"></small>
-                        </div>
+
                         <div class="form-group">
                             <label for="productName"><span class="red-stars">**</span> Product Name</label>
                             <input type="text" class="form-control" id="productName" name="productName" value="<?= htmlentities($row['productName']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
-                            <label for="startingDate"><span class="red-stars">**</span> Starting date</label>
+                            <label for="startingDate"> Starting date</label>
                             <input type="date" class="form-control" id="startingDate" name="startingDate" value="<?= htmlentities($row['startingDate']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
-                            <label for="startingTime"><span class="red-stars">**</span> Starting time</label>
+                            <label for="startingTime"> Starting time</label>
                             <input type="time" class="form-control" id="startingTime" name="startingTime" value="<?= htmlentities($row['startingTime']) ?>">
 
                         </div>
@@ -133,18 +129,20 @@ if (empty($row)) {
     const $startedPrice = document.querySelector('#startedPrice')
     const $bidPrice = document.querySelector('#bidPrice')
     const $soldPrice = document.querySelector('#soldPrice')
-    const r = [$productName, $startedPrice, $bidPrice, $soldPrice]
+    const rf = [$productName, $startedPrice, $bidPrice, $soldPrice]
     const infobar = document.querySelector('#infobar')
-    const submitBtn = document.querySelector('button[type=submit]');
+    const submitBtn = document.querySelector('button[type=submit]')
+
 
     const checkForm = () => {
         let isPass = true
 
-        r.forEach((el) => {
+        rf.forEach((el) => {
             el.style.borderColor = '#cccccc';
             el.nextElementSibling.innerHTML = '';
         });
         submitBtn.style.display = 'none';
+
 
         if (!productName_pattern.test($productName.value)) {
             isPass = false;
@@ -156,6 +154,16 @@ if (empty($row)) {
             isPass = false;
             $startedPrice.style.borderColor = 'red';
             $startedPrice.nextElementSibling.innerHTML = 'Please input your price correctly';
+        };
+        if (!bidPrice_p.test($bidPrice.value)) {
+            isPass = false;
+            $bidPrice.style.borderColor = 'red';
+            $bidPrice.nextElementSibling.innerHTML = 'Please input your price correctly';
+        };
+        if (!soldPrice_p.test($soldPrice.value)) {
+            isPass = false;
+            $soldPrice.style.borderColor = 'red';
+            $soldPrice.nextElementSibling.innerHTML = 'Please input your price correctly';
         };
 
         if (isPass) {
@@ -170,21 +178,18 @@ if (empty($row)) {
                     console.log(obj);
                     if (obj.success) {
                         infobar.innerHTML = '修改成功';
-                        // infobar.className = "alert alert-success";
-                        if (infobar.classList.contains('alert-danger')) {
-                            infobar.classList.replace('alert-danger', 'alert-success')
-                            setTimeout(() => {
-                                location.href = '<?= $_SERVER['HTTP_REFERER'] ?? "biddingList.php" ?>';
-                            }, 3000);
-                        };
+                        infobar.className = "alert alert-success";
+                        setTimeout(() => {
+                            location.href = '<?= $_SERVER['HTTP_REFERER'] ?? "biddingList.php" ?>';
+                        }, 3000);
+
                     } else {
                         infobar.innerHTML = obj.error || '資料未修改';
-                        // infobar.className = "alert alert-danger";
-                        if (infobar.classList.contains('alert-success')) {
-                            infobar.classList.replace('alert-success', 'alert-danger')
-                            submitBtn.style.display = 'block';
-                        }
+                        infobar.className = "alert alert-danger";
+
+                        submitBtn.style.display = 'block';
                     }
+
                     infobar.style.display = 'block';
                 });
 

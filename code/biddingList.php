@@ -57,9 +57,9 @@ if ($totalRows > 0) {
     <thead class="thead-light">
         <tr>
             <?php if (isset($_SESSION['admin'])) : ?>
-                <th>
+                <!-- <th>
                     <i class="fas fa-check-circle"></i>
-                </th>
+                </th> -->
                 <th><i class="fas fa-trash-alt"></i></th>
             <?php endif; ?>
             <th scope="col">No.</th>
@@ -82,13 +82,13 @@ if ($totalRows > 0) {
         <?php foreach ($rows as $r) : ?>
             <tr>
                 <?php if (isset($_SESSION['admin'])) : ?>
-                    <td class="form-check form-check-inline">
+                    <!-- <td class="form-check form-check-inline">
                         <input class="form-check-input checkbox" type="checkbox" id=checkbox" name="checkbox" value="option1">                        
-                    </td>
+                    </td> -->
                     <td><a href="biddingDelete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
                             <i class="fas fa-trash-alt"></i></a></td>
                 <?php endif; ?>
-                <td><?= $r['product_sid'] ?></td>
+                <td><?= $r['sid'] ?></td>
                 <td><?= $r['productName'] ?></td>
                 <td><img src="./upload/<?= $r['pics'] ?>" alt=""></td>
                 <td><?= $r['startingDate'] ?></td>
@@ -111,6 +111,11 @@ if ($totalRows > 0) {
             <nav aria-label="Page navigation example ">
                 <ul class="pagination">
                     <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?page=<?= $page == 1 ?>">
+                            第一頁
+                        </a>
+                    </li>
+                    <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
                         <a class="page-link" href="?page=<?= $page - 1 ?>">
                             <i class="fas fa-angle-double-left"></i>
                         </a>
@@ -126,6 +131,11 @@ if ($totalRows > 0) {
                     <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
                         <a class="page-link" href="?page=<?= $page + 1 ?>">
                             <i class="fas fa-angle-double-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?page=<?= $totalPages ?>">
+                            最後一頁
                         </a>
                     </li>
                 </ul>
@@ -150,16 +160,16 @@ if ($totalRows > 0) {
     //     }
     // }
 
-    const checkbox = document.querySelector('#checkbox')
-    const checkboxN = document.querySelector('.checkbox')
+    // const checkbox = document.querySelector('#checkbox')
+    // const checkboxN = document.querySelector('.checkbox')
 
-    const check = ()=>{
-        
-        if(checkbox.checked ==true)
-        checkbox.addEventListener('click',()=>{
+    // const check = ()=>{
 
-        })
-    }
+    //     if(checkbox.checked ==true)
+    //     checkbox.addEventListener('click',()=>{
+
+    //     })
+    // }
 
     // const table = document.querySelector('table')
 
